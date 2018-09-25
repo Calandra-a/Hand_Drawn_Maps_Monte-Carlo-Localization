@@ -1,0 +1,8 @@
+#ignore Everything
+*
+
+#Except
+!.gitignore
+!README.md
+!DisplayImage.cpp
+!CmakeLists.txt
