@@ -4,5 +4,5 @@
 #Except
 !.gitignore
 !README.md
-!DisplayImage.cpp
+!TemplateMatching.cpp
 !CmakeLists.txt
