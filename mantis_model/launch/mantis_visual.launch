@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Parse the URDF file and load it into the '/robot_description' ROS parameter -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find mantis_model)/urdf/mantis_visual.urdf.xacro'" />
+
+  <!-- Run the robot_state_publisher node that takes the description parameter and manages all the TF frames -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+
+  <!-- Our custom node publishes the joint angles of the robot to inform the robot_state_publisher -->
+  <node pkg="mantis_model" type="mantis_state_pub" name="mantis_state_pub" />
+
+</launch>

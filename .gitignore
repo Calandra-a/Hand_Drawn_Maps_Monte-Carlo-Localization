@@ -5,7 +5,7 @@
 *.cmake
 *.bin
 CMakeFiles/
-*.*
+!*.*
 
 #caught in *.txt however this needs to be pushed
 !CMakeLists.txt
