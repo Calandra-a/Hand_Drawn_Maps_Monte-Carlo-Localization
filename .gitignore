@@ -1,11 +1,11 @@
 #ignore Everything
-!*.*
 *.jpg
 *.png
 *.txt
 *.cmake
 *.bin
 CMakeFiles/
+Makefile
 
 #caught in *.txt however this needs to be pushed
 !CMakeLists.txt
