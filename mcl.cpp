@@ -48,7 +48,7 @@ vector<particle> mcl(vector<particle> pearTickles ,control movement, int sampleS
 	//predicitive sampling
 	particle p;
 	for(int i =0; i < sampleSize; i++){
-		motion_model(p, pearTickles.at(m),control movement);
+		motion_model(p, pearTickles.at(i),control movement);
 
 		//p.setWeight = MeasurmentModel
 		//predSample.add(p);
@@ -64,16 +64,17 @@ vector<particle> mcl(vector<particle> pearTickles ,control movement, int sampleS
 //Velocity Motion Model
 //positive rotation is left
 //positive translation is forward 
-int motion_model(particle new, particle previous, control move){ 
+void motion_model(particle new, particle previous, control move){ 
 
-int update[3]; //updated pose x,y,theta
+//int update[3]; //updated pose x,y,theta
 int xCenter;
 int yCenter;
 
 xCenter = (previous.Pose[0] - (move.Tvel/move.Rvel)*sin(previous.Pose[2]));
 yCenter = (previous.Pose[1] + (move.Tvel/move.Rvel)*cos(previous.Pose[2]));
 
-update[0] = xCenter + (move.Tvel/move.Rvel)*sin(previous.pose[2]+ (move.Rvel*move.duration));
-update[1] = yCenter - (move.Tvel/move.Rvel)*cos(previous.pose[2]+ (move.Rvel*move.duration));
-update[2] = move.Rvel*move.duration;
+new.pose[0] = xCenter + (move.Tvel/move.Rvel)*sin(previous.pose[2]+ (move.Rvel*move.duration));
+new.pose[1] = yCenter - (move.Tvel/move.Rvel)*cos(previous.pose[2]+ (move.Rvel*move.duration));
+new.pose[2] = move.Rvel*move.duration;
 }
+
