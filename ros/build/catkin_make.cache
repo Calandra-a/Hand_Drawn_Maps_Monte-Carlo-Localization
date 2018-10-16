@@ -1,0 +1,2 @@
+mantis_model
+-DCATKIN_DEVEL_PREFIX=/home/reeeeeeeeeee/ResearchProject/ros/devel -DCMAKE_INSTALL_PREFIX=/home/reeeeeeeeeee/ResearchProject/ros/install -G Unix Makefiles
