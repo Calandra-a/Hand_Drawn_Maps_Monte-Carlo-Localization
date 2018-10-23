@@ -6,6 +6,8 @@
 *.bin
 CMakeFiles/
 Makefile
+ros/dev/
+ros/build/
 
 #caught in *.txt however this needs to be pushed
 !CMakeLists.txt
