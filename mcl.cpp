@@ -1,6 +1,6 @@
 #include <vector>
 #include <cmath>
-#include <math>
+#include <math.h>
 #include <boost/math/distributions/normal.hpp>
 
 using namespace std;
@@ -32,7 +32,7 @@ class control{
 	control(int T, int R, int D){
 		Tvel = T;
 		Rvel = R;
-		duration = D
+		duration = D;
 	}
 
 };
@@ -41,17 +41,21 @@ class feature{
 	int bearing; //degrees?
 	int signiture; //signiture 
 	int correspondence;
-
-	void create(int r,b,s,c){
+	int x;
+	int y;
+	void create(int r,int b,int s,int c, int x-in, int y-in){
 		range = r;
 		bearing = b;
 		signiture = s;
 		correspondence = c;
+		x = x-in;
+		y = y-in;
+
 	}
-}
+};
 
 class map{
-	vector<feature> map;	
+	vector<feature> Map;	
 
 	map(){
 		populateMap(3);
@@ -64,7 +68,7 @@ class map{
 		}
 	}
 
-}
+};
 
 int main(){
 
@@ -115,10 +119,17 @@ new.pose[2] = move.Rvel*move.duration;
 int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map???
 		j=feature.correspondence
 		int tRange; // r-hat
-		tRange = sqrt(((map.getX(j)-p.pose[0])*(map.getX(i)-p.pose[0]))+((map.getY(j)-p.pose[1])*(map.getY(j)-p.pose[1])))
+		
+		tRange = sqrt(
+			((Map.Map.at(j).x-p.pose[0])*(Map.Map.at(j).x-p.pose[0]))
+			+((Map.Map.at(j).y-p.pose[1])*(Map.getY(j).y-p.pose[1])));
+
 		int rBearing; //Phi-hat
-		tBearing = atan2((map.getY(j)-p.pose[1]),(map.getX(j)-p.pose[0]));
+		
+		tBearing = atan2((Map.getY(j)-p.pose[1]),(Map.getX(j)-p.pose[0]));
+		
 		int q; //numerical probablity p(f[i] at time t | c[i] at time t, m, x at time t)
+		
 		q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - Map.map.at(j), StandardDevS); 
 
 		//q = normal_distribution
