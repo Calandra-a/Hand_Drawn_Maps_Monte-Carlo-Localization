@@ -1,10 +1,11 @@
 #include <vector>
 #include <cmath>
 #include <math.h>
+#include <iostream>
 #include <boost/math/distributions/normal.hpp>
 
 using namespace std;
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 class particle{
 
 public:
@@ -22,7 +23,7 @@ public:
 	}
 };
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 class control{
 public:
 	int Tvel;
@@ -36,6 +37,7 @@ public:
 	}
 
 };
+//-----------------------------------------------------------------------------------------------------------------------------------
 class feature{
 public:
 	int range;
@@ -55,7 +57,7 @@ public:
 
 	}
 };
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 class map{
 public:
 	static vector<feature> Map;	
@@ -73,25 +75,40 @@ public:
 	}
 
 };
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 int main(){
-
+	vector<particle> particles;
+	control movement(1, 1, 1);
+	int sampleSize = 10;
+	mcl(particles, movement, sampleSize);
+	return 0;
 }
 
+void generateParticles(vector<particle> particles, int setSize) {
+	for (int i = 0; i < setSize; i++) {
+		int x = rand() % 15;//randoms 0-15
+		int y = rand() % 15;
+		int t = rand() % 15;
+		cout << x << y << t;
+		particle p;
+		int pose[3] = { x,y,t };
+		p.setPose(pose);
+	}
+}
+//-----------------------------------------------------------------------------------------------------------------------------------
 
 vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleSize){
 	vector<particle> predSample;
 	std::vector<particle> resample;
 	map new_map;
-	control Movement(1,1,1);
+	//control Movement(1,1,1);
 	//Xbar = X = NUll
 	predSample.clear();
 	resample.clear();
 	//predicitive sampling
 	particle p;
 	for(int i =0; i < sampleSize; i++){
-		motion_model(p, inParticles.at(i),Movement);
-
+		motion_model(p, inParticles.at(i),movement);
 		p.setWeight = MeasurmentModel(new_map.Map.at(i), p, new_map);// p has pose, map.at(i) has feature and correspondence, Map is the map
 		predSample.push_back(p);
 	}
@@ -102,7 +119,7 @@ vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleS
 	}
 }
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 //Velocity Motion Model
 //positive rotation is left
 //positive translation is forward 
@@ -120,6 +137,7 @@ p_new.pose[1] = yCenter - (move.Tvel/move.Rvel)*cos(previous.pose[2]+ (move.Rvel
 p_new.pose[2] = move.Rvel*move.duration;
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------------
 int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map???
 	int j = feature.correspondence;
 		int tRange; // r-hat
@@ -144,10 +162,7 @@ int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map??
 
 
 /*TODO
-feature extractor to generate
--map - Vector of features
--features - to populate map
--establish releated correspondence to each feature
+q = prob in measurement model
 -draw i with prob proportional with w[i]
 -write main
 */
