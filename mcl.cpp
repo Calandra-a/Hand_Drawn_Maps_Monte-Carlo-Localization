@@ -1,10 +1,11 @@
 #include <vector>
 #include <cmath>
 #include <math.h>
+#include <iostream>
 #include <boost/math/distributions/normal.hpp>
 
 using namespace std;
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 class particle{
 
 public:
@@ -22,9 +23,9 @@ public:
 	}
 };
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 class control{
-
+public:
 	int Tvel;
 	int Rvel;
 	int duration;
@@ -36,26 +37,30 @@ class control{
 	}
 
 };
+//-----------------------------------------------------------------------------------------------------------------------------------
 class feature{
+public:
 	int range;
 	int bearing; //degrees?
 	int signiture; //signiture 
 	int correspondence;
 	int x;
 	int y;
-	void create(int r,int b,int s,int c, int x-in, int y-in){
+public:
+	void create(int r,int b,int s,int c, int x_in, int y_in){
 		range = r;
 		bearing = b;
 		signiture = s;
 		correspondence = c;
-		x = x-in;
-		y = y-in;
+		x = x_in;
+		y = y_in;
 
 	}
 };
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 class map{
-	vector<feature> Map;	
+public:
+	static vector<feature> Map;	
 
 	map(){
 		populateMap(3);
@@ -64,45 +69,61 @@ class map{
 
 		for(int i =0; i< numOfFeatures; i++){
 			feature f;
-			f.create(i,i,i,i);
+			f.create(i,i,i,i,i,i);
+			Map.push_back(f);
 		}
 	}
 
 };
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 int main(){
-
+	vector<particle> particles;
+	control movement(1, 1, 1);
+	int sampleSize = 10;
+	mcl(particles, movement, sampleSize);
+	return 0;
 }
 
+void generateParticles(vector<particle> particles, int setSize) {
+	for (int i = 0; i < setSize; i++) {
+		int x = rand() % 15;//randoms 0-15
+		int y = rand() % 15;
+		int t = rand() % 15;
+		cout << x << y << t;
+		particle p;
+		int pose[3] = { x,y,t };
+		p.setPose(pose);
+	}
+}
+//-----------------------------------------------------------------------------------------------------------------------------------
 
 vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleSize){
 	vector<particle> predSample;
 	std::vector<particle> resample;
-	map Map;
-	control Movement;
+	map new_map;
+	//control Movement(1,1,1);
 	//Xbar = X = NUll
 	predSample.clear();
 	resample.clear();
 	//predicitive sampling
 	particle p;
 	for(int i =0; i < sampleSize; i++){
-		motion_model(p, inParticles.at(i),Movement);
-
-		p.setWeight = MeasurmentModel(p, Map.map.at(i), Map)// p has pose, map.at(i) has feature and correspondence, Map is the map
-		predSample.add(p);
+		motion_model(p, inParticles.at(i),movement);
+		p.setWeight = MeasurmentModel(new_map.Map.at(i), p, new_map);// p has pose, map.at(i) has feature and correspondence, Map is the map
+		predSample.push_back(p);
 	}
 	particle prs;//particle resampled
 	for(int i =0; i < sampleSize; i++){
 		//draw i with prob proportional with w[i]
-		resample.add(prs);
+		resample.push_back(prs);
 	}
 }
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------
 //Velocity Motion Model
 //positive rotation is left
 //positive translation is forward 
-void motion_model(particle new, particle previous, control move){ 
+void motion_model(particle p_new, particle previous, control move){
  
 //int update[3]; //updated pose x,y,theta
 int xCenter;
@@ -111,26 +132,27 @@ int yCenter;
 xCenter = (previous.Pose[0] - (move.Tvel/move.Rvel)*sin(previous.Pose[2]));
 yCenter = (previous.Pose[1] + (move.Tvel/move.Rvel)*cos(previous.Pose[2]));
 
-new.pose[0] = xCenter + (move.Tvel/move.Rvel)*sin(previous.pose[2]+ (move.Rvel*move.duration));
-new.pose[1] = yCenter - (move.Tvel/move.Rvel)*cos(previous.pose[2]+ (move.Rvel*move.duration));
-new.pose[2] = move.Rvel*move.duration;
+p_new.pose[0] = xCenter + (move.Tvel/move.Rvel)*sin(previous.pose[2]+ (move.Rvel*move.duration));
+p_new.pose[1] = yCenter - (move.Tvel/move.Rvel)*cos(previous.pose[2]+ (move.Rvel*move.duration));
+p_new.pose[2] = move.Rvel*move.duration;
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------------
 int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map???
-		j=feature.correspondence
+	int j = feature.correspondence;
 		int tRange; // r-hat
 		
 		tRange = sqrt(
 			((Map.Map.at(j).x-p.pose[0])*(Map.Map.at(j).x-p.pose[0]))
-			+((Map.Map.at(j).y-p.pose[1])*(Map.getY(j).y-p.pose[1])));
+			+((Map.Map.at(j).y-p.pose[1])*(Map.Map.at(j).y-p.pose[1])));
 
-		int rBearing; //Phi-hat
+		int tBearing; //Phi-hat
 		
-		tBearing = atan2((Map.getY(j)-p.pose[1]),(Map.getX(j)-p.pose[0]));
+		tBearing = atan2((Map.Map.at(j).y-p.pose[1]),(Map.Map.at(j).x-p.pose[0]));
 		
 		int q; //numerical probablity p(f[i] at time t | c[i] at time t, m, x at time t)
 		
-		q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - Map.map.at(j), StandardDevS); 
+		q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - Map.Map.at(j).correspondence, StandardDevS); 
 
 		//q = normal_distribution
 		return q; 
@@ -140,13 +162,7 @@ int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map??
 
 
 /*TODO
-feature extractor to generate
--map - Vector of features
--features - to populate map
--establish releated correspondence to each feature
-
+q = prob in measurement model
 -draw i with prob proportional with w[i]
 -write main
 */
-
-
