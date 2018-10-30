@@ -1,6 +1,8 @@
 #include <vector>
 #include <cmath>
 #include <math>
+#include <boost/math/distributions/normal.hpp>
+
 using namespace std;
 
 class particle{
@@ -82,7 +84,7 @@ vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleS
 	for(int i =0; i < sampleSize; i++){
 		motion_model(p, inParticles.at(i),Movement);
 
-		p.setWeight = MeasurmentModel(p, Map.map.at(i))
+		p.setWeight = MeasurmentModel(p, Map.map.at(i), Map)// p has pose, map.at(i) has feature and correspondence, Map is the map
 		predSample.add(p);
 	}
 	particle prs;//particle resampled
@@ -110,14 +112,16 @@ new.pose[1] = yCenter - (move.Tvel/move.Rvel)*cos(previous.pose[2]+ (move.Rvel*m
 new.pose[2] = move.Rvel*move.duration;
 }
 
-int  MeasurmentModel(feature feature,particle p){//occupancy grid map???
+int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map???
 		j=feature.correspondence
 		int tRange; // r-hat
 		tRange = sqrt(((map.getX(j)-p.pose[0])*(map.getX(i)-p.pose[0]))+((map.getY(j)-p.pose[1])*(map.getY(j)-p.pose[1])))
 		int rBearing; //Phi-hat
 		tBearing = atan2((map.getY(j)-p.pose[1]),(map.getX(j)-p.pose[0]));
 		int q; //numerical probablity p(f[i] at time t | c[i] at time t, m, x at time t)
-		q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - signiture(j), StandardDevS); 
+		q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - Map.map.at(j), StandardDevS); 
+
+		//q = normal_distribution
 		return q; 
 }
 
