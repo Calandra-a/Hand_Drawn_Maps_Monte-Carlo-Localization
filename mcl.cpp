@@ -165,17 +165,14 @@ int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map??
 		dist.mean = ((double)feature.range - (double)tRange);
 		dist.standard_deviation = 1;
 
-		
+		//q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - Map.Map.at(j).correspondence, StandardDevS); 
+
 
 		//q = normal_distribution
 		return q; 
 }
 
-
-
-
 /*TODO
 q = prob in measurement model
--draw i with prob proportional with w[i]
--write main
+complete  main
 */
