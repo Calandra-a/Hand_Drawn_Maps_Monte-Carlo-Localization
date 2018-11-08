@@ -2,9 +2,10 @@
 #include <cmath>
 #include <math.h>
 #include <iostream>
-#include <boost/math/distributions/normal.hpp>
+#include "boost_1_68_0\boost\math\distributions\normal.hpp"
 
 using namespace std;
+using boost::math::normal; // typedef provides default type is double.
 //-----------------------------------------------------------------------------------------------------------------------------------
 class particle{
 
@@ -112,10 +113,19 @@ vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleS
 		p.setWeight = MeasurmentModel(new_map.Map.at(i), p, new_map);// p has pose, map.at(i) has feature and correspondence, Map is the map
 		predSample.push_back(p);
 	}
-	particle prs;//particle resampled
+
 	for(int i =0; i < sampleSize; i++){
 		//draw i with prob proportional with w[i]
-		resample.push_back(prs);
+		particle selected = predSample.at(0);
+		int location = 0;
+		for (int i = 1; i < predSample.size(); i++) {
+			if (predSample.at(i).weight > selected.weight) {
+				selected = predSample.at(i);
+				location = i;
+			}
+		}
+		resample.push_back(selected);
+		predSample.erase(predSample.begin+location);
 	}
 }
 
@@ -150,9 +160,12 @@ int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map??
 		
 		tBearing = atan2((Map.Map.at(j).y-p.pose[1]),(Map.Map.at(j).x-p.pose[0]));
 		
-		int q; //numerical probablity p(f[i] at time t | c[i] at time t, m, x at time t)
+		double q; //numerical probablity p(f[i] at time t | c[i] at time t, m, x at time t)
+		normal dist;
+		dist.mean = ((double)feature.range - (double)tRange);
+		dist.standard_deviation = 1;
+
 		
-		q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - Map.Map.at(j).correspondence, StandardDevS); 
 
 		//q = normal_distribution
 		return q; 
