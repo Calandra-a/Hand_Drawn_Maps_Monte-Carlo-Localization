@@ -2,10 +2,10 @@
 #include <cmath>
 #include <math.h>
 #include <iostream>
-#include "boost_1_68_0\boost\math\distributions\normal.hpp"
+//#include "boost_1_68_0\boost\math\distributions\normal.hpp"
 
 using namespace std;
-using boost::math::normal; // typedef provides default type is double.
+//using boost::math::normal; // typedef provides default type is double.
 
 class particle {
 public:
@@ -49,12 +49,7 @@ vector<particle> mcl(vector<particle> inParticles, control movement, int sampleS
 void motion_model(particle p_new, particle previous, control move);
 int  MeasurmentModel(feature feature, particle p, map Map);
 int prob(int delta);
-
-
-
 //-----------------------------------------------------------------------------------------------------------------------------------
-
-
 	void particle::setPose(int newPose[3]){
 		pose[0] = newPose[0];//update x
 		pose[1] = newPose[1];//update y
@@ -65,19 +60,14 @@ int prob(int delta);
 
 
 	}
-
 //-----------------------------------------------------------------------------------------------------------------------------------
-
-
-
 	control::control(int T, int R, int D) {
 		Tvel = T;
 		Rvel = R;
 		duration = D;
 	}
 //-----------------------------------------------------------------------------------------------------------------------------------
-
-void feature:: create(int r, int b, int s, int c, int x_in, int y_in) {
+	void feature:: create(int r, int b, int s, int c, int x_in, int y_in) {
 	range = r;
 	bearing = b;
 	signiture = s;
@@ -87,12 +77,11 @@ void feature:: create(int r, int b, int s, int c, int x_in, int y_in) {
 
 }
 //-----------------------------------------------------------------------------------------------------------------------------------
-
-vector<feature> map::Map;
-map::map() {
+	vector<feature> map::Map;
+	map::map() {
 	populateMap(3);
 }
-void map::populateMap(int numOfFeatures) {
+	void map::populateMap(int numOfFeatures) {
 
 	for (int i = 0; i < numOfFeatures; i++) {
 		feature f;
@@ -101,6 +90,7 @@ void map::populateMap(int numOfFeatures) {
 	}
 }
 //-----------------------------------------------------------------------------------------------------------------------------------
+
 int main(){
 	vector<particle> particles;
 	particles = generateParticles(particles,10);
@@ -126,7 +116,9 @@ vector<particle> generateParticles(vector<particle> particles, int setSize) {
 	return particles;
 
 }
+
 //-----------------------------------------------------------------------------------------------------------------------------------
+
 vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleSize){
 	vector<particle> predSample;
 	std::vector<particle> resample;
@@ -152,10 +144,10 @@ vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleS
 		//draw i with prob proportional with w[i]
 		particle selected = predSample.at(0);
 		int location = 0;
-		for (int i = 1; i < predSample.size(); i++) {
-			if (predSample.at(i).weight > selected.weight) {
-				selected = predSample.at(i);
-				location = i;
+		for (int j = 1; j < predSample.size(); j++) {
+			if (predSample.at(j).weight > selected.weight) {
+				selected = predSample.at(j);
+				location = j;
 			}
 		}
 		resample.push_back(selected);
@@ -183,6 +175,7 @@ p_new.pose[2] = move.Rvel*move.duration;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
+
 int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map???
 	int j = feature.correspondence;
 		int tRange; // r-hat
