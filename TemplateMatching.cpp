@@ -27,7 +27,7 @@ public:
   void printMap();
 };
 
-void mapNorm(map);
+map mapNorm(map);
 
 /// Global Variables
 Mat img; Mat templ; Mat result;
@@ -62,7 +62,7 @@ int main( int, char** argv )
   Point matchLoc;
   double minVal; double maxVal;
 
-  for(int k=1;k<=10;k++){
+  for(int k=1;k<=20;k++){
     object obj;
     minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, Mat() );
     result.at<float>(minLoc.x,minLoc.y)=1.0;
@@ -89,9 +89,9 @@ int main( int, char** argv )
     //printf("BOTTOM: X: %d Y: %d\n", bottom.x, bottom.y);
   }
   Map.printMap();
-  //mapNorm(Map);
-  //printf("\n-----------------------------\n");
-  //Map.printMap();
+  Map = mapNorm(Map);
+  printf("\n-----------------------------\n");
+  Map.printMap();
   
   imshow( image_window, img );
   //imshow( result_window, result );
@@ -125,20 +125,47 @@ void map::printMap(){
     printf("Object: %d\n",i);
     objects.at(i).getObject();
 
+
   }
 }
-/*
-void mapNorm(map Map){
-  for(int i =Map.objects.size()-1; i >= 0; i--){
-    for(int j =Map.objects.size()-2; j >= 0; j--){
-      if ((abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x) < 4) &&
+
+
+map mapNorm(map Map){
+  vector<int> remove;
+  map newMap;
+  for(int i = 0; i < Map.objects.size(); i++){
+    for(int j = 1; j < Map.objects.size(); j++){
+      //printf("I %d, J: %d\n",i,j );
+                //printf("I: %d J: %d", i,j);
+   // if ((abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x) < 4)){
+      //  int a= abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x);
+if (((abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x) < 4) &&
           (abs(Map.objects.at(i).topLeft.y - Map.objects.at(j).topLeft.y) < 4) &&
           (abs(Map.objects.at(i).bottomRight.x - Map.objects.at(j).bottomRight.x) < 4) &&
-          (abs(Map.objects.at(i).bottomRight.y - Map.objects.at(j).bottomRight.y) < 4)){
-        Map.objects.pop_back();
+          (abs(Map.objects.at(i).bottomRight.y - Map.objects.at(j).bottomRight.y) < 4)) && 
+          (i!=j) &&
+          (find(remove.begin(),remove.end(),j) == remove.end())){
+/*
+          int a,b,c,d;
+          a= abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x);
+          b= abs(Map.objects.at(i).topLeft.y - Map.objects.at(j).topLeft.y);
+          c= abs(Map.objects.at(i).bottomRight.x - Map.objects.at(j).bottomRight.x);
+          d= abs(Map.objects.at(i).bottomRight.y - Map.objects.at(j).bottomRight.y);
+          printf("REMOVE %d J: %d:::::%d %d %d %d\n", i,j, a, b ,c, d );
+          printf("\nI: %d J: %d\n", i,j);
+*/
+          remove.push_back(i);
+          //printf("i.x: %d j.x: %d DELTA: %d\n", Map.objects.at(i).topLeft.x ,Map.objects.at(j).topLeft.x,a );
+          //Map.objects.erase(Map.objects.begin());
+          //break;
+      
       }
     }
-
   }
-
-}*/
+  for (int i =0; i < Map.objects.size(); i++){
+    if(find(remove.begin(),remove.end(),i) == remove.end()){
+      newMap.objects.push_back(Map.objects.at(i));
+    }
+  }
+  return newMap;
+}
