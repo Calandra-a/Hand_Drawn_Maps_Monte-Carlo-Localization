@@ -135,29 +135,15 @@ map mapNorm(map Map){
   map newMap;
   for(int i = 0; i < Map.objects.size(); i++){
     for(int j = 1; j < Map.objects.size(); j++){
-      //printf("I %d, J: %d\n",i,j );
-                //printf("I: %d J: %d", i,j);
-   // if ((abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x) < 4)){
-      //  int a= abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x);
+
 if (((abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x) < 4) &&
           (abs(Map.objects.at(i).topLeft.y - Map.objects.at(j).topLeft.y) < 4) &&
           (abs(Map.objects.at(i).bottomRight.x - Map.objects.at(j).bottomRight.x) < 4) &&
           (abs(Map.objects.at(i).bottomRight.y - Map.objects.at(j).bottomRight.y) < 4)) && 
           (i!=j) &&
           (find(remove.begin(),remove.end(),j) == remove.end())){
-/*
-          int a,b,c,d;
-          a= abs(Map.objects.at(i).topLeft.x - Map.objects.at(j).topLeft.x);
-          b= abs(Map.objects.at(i).topLeft.y - Map.objects.at(j).topLeft.y);
-          c= abs(Map.objects.at(i).bottomRight.x - Map.objects.at(j).bottomRight.x);
-          d= abs(Map.objects.at(i).bottomRight.y - Map.objects.at(j).bottomRight.y);
-          printf("REMOVE %d J: %d:::::%d %d %d %d\n", i,j, a, b ,c, d );
-          printf("\nI: %d J: %d\n", i,j);
-*/
-          remove.push_back(i);
-          //printf("i.x: %d j.x: %d DELTA: %d\n", Map.objects.at(i).topLeft.x ,Map.objects.at(j).topLeft.x,a );
-          //Map.objects.erase(Map.objects.begin());
-          //break;
+
+            remove.push_back(i);
       
       }
     }
