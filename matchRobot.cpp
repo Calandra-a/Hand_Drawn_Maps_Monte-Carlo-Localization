@@ -52,7 +52,16 @@ int main( int, char** argv )
     rectangle( result, matchLoc, Point( matchLoc.x + templ.cols , matchLoc.y + templ.rows ),
      Scalar::all(0), 2, 8, 0 );
 
-  
+    Point bottom;
+    bottom.x = matchLoc.x + templ.cols;
+    bottom.y = matchLoc.y + templ.rows;
+
+    Point pose;
+    pose.x = (matchLoc.x +bottom.x)/2;
+    pose.y = (matchLoc.y+bottom.y)/2;
+
+
+
   imshow( image_window, img );
   //imshow( result_window, result );
   

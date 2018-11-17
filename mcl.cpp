@@ -102,8 +102,14 @@ int main(){
 	control movement(1, 1, 1);
 	int sampleSize = 10;
 	vector<particle> newParticles;
+	/*for (int i = 0; i<particles.size(); i++){
+		particles.at(i).getPose();
+	}*/
 	newParticles = mcl(particles, movement, sampleSize);
-	system("PAUSE");
+	cout<<"\n";
+	/*for (int i = 0; i<newParticles.size(); i++){
+		newParticles.at(i).getPose();
+	}*/
 	return 0;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -168,7 +174,6 @@ vector<particle> mcl(vector<particle> inParticles ,control movement, int sampleS
 particle motion_model(particle p_new, particle previous, control move){
  
 
-//int update[3]; //updated pose x,y,theta
 int xCenter;
 int yCenter;
 
@@ -208,7 +213,6 @@ int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map??
 
 		q = (prob(deltaR) + prob(deltaB) + prob(deltaS))/3;
 		q -= error;
-		//cout << "q: " << q<<" ";
 		return q; 
 }
 int prob(int delta) {
