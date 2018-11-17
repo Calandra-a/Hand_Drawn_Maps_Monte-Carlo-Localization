@@ -189,17 +189,30 @@ int  MeasurmentModel(feature feature,particle p, map Map){//occupancy grid map??
 		tBearing = atan2((Map.Map.at(j).y-p.pose[1]),(Map.Map.at(j).x-p.pose[0]));
 		
 
+<<<<<<< HEAD
 		int q; //numerical probablity p(f[i] at time t | c[i] at time t, m, x at time t)
 		int deltaR, deltaB, deltaS;
 		deltaR = feature.range - tRange;
 		deltaB = feature.bearing - tBearing;
 		deltaS = feature.signiture - Map.Map.at(j).correspondence;
+=======
+		//q = prob(feature.range - tRange,StandardDevR) * prob(feature.bearing - tBearing, StandardDevB) * prob(feature.signiture - Map.Map.at(j).correspondence, StandardDevS); 
+
+>>>>>>> d074fe742c22a210db3d40fae568d9dcb1556e3b
 
 		q = (prob(deltaR) + prob(deltaB) + prob(deltaS))/3;
 		return q; 
 }
+<<<<<<< HEAD
 int prob(int delta) {
 	int prob;
 	prob = 100 - (delta / 100); //100% - delta(percentage)
 	return prob;
 }
+=======
+
+/*TODO
+q = prob in measurement model
+complete  main
+*/
+>>>>>>> d074fe742c22a210db3d40fae568d9dcb1556e3b
