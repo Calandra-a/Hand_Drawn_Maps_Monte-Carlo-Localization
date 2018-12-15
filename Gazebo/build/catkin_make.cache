@@ -1,0 +1,2 @@
+mybot_control:mybot_description:mybot_gazebo
+-DCATKIN_DEVEL_PREFIX=/home/arc/ResearchProject/Gazebo/devel -DCMAKE_INSTALL_PREFIX=/home/arc/ResearchProject/Gazebo/install -G Unix Makefiles

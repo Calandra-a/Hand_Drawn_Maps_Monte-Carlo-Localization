@@ -1,0 +1,8 @@
+prefix=/home/arc/ResearchProject/Gazebo/devel
+
+Name: mybot_gazebo
+Description: Description of mybot_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/arc/ResearchProject/Gazebo/devel/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/arc/ros/devel
+
+Name: sub_pub
+Description: Description of sub_pub
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/arc/ros/devel/lib 
+Requires: 
