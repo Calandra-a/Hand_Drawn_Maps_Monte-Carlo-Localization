@@ -12,10 +12,10 @@ Function one: Human Machine Interface
 File: TemplateMatching.cpp
  mapMatch
 Developed using OpenCV 3.2
-----------------------------------------------------------------------------------
+
+
 Example execution command: 
 ./mapMatch testing/map_full.png testing/template.png testing/template_robot.png
-----------------------------------------------------------------------------------
 
 Execution: 3 images are required, and will be passed in as command line arguments
 
@@ -28,7 +28,7 @@ I have pre made testing documents in the testing folder as well
 
 Images should be passed in in the order of MAP, OBJECT TEMPLATE, ROBOT TEMPLATE.
 
--------------------------------------------------------------------------------------
+
 Function two: MCL
 File: mcl.cpp
 Comiled Executable: mcl
@@ -46,7 +46,7 @@ and the resampled set also displays it's weights.
 
 
 
- -----------------------------------------------------------------------------------
+ 
 
 These are compiled using cmake 2.8 or above
 
@@ -85,5 +85,5 @@ world3C3.launch
 
 Robot model was sourced from https://github.com/richardw05/mybot_ws.git and the accompanying guide (http://moorerobots.com/blog/post/2) not oringal work except for plugin modifications to fit my applications
 
-differential drive robot model was sourced from https://github.com/richardw05/mybot_ws.git and the accomanying tutorial guide and was not my orginal design - Source: http://moorerobots.com/blog/post/2
+Dev branch has more advanced code however, it is unstable, ros integration is present there with mcl subscribing to odometry data and camera data. as well, a much more refined file structure specifcly with mcl as it is broken down into idividule files instead of one large one
 
