@@ -2,7 +2,7 @@
 #include <cmath>
 #include <math.h>
 #include <iostream>
-
+#include <cstdlib>
 using namespace std;
 
 class particle {
@@ -63,7 +63,7 @@ int prob(int delta);
 		cout << "x: " << pose[0];
 		cout << " y: " << pose[1];
 		cout << " t: " << pose[2];
-		cout << "\n";
+		
 	}
 //-----------------------------------------------------------------------------------------------------------------------------------
 	control::control(int T, int R, int D) {
@@ -102,14 +102,16 @@ int main(){
 	control movement(1, 1, 1);
 	int sampleSize = 10;
 	vector<particle> newParticles;
-	/*for (int i = 0; i<particles.size(); i++){
+	for (int i = 0; i<particles.size(); i++){
 		particles.at(i).getPose();
-	}*/
+		cout<<"\n";
+	}
 	newParticles = mcl(particles, movement, sampleSize);
 	cout<<"\n";
-	/*for (int i = 0; i<newParticles.size(); i++){
+	for (int i = 0; i<newParticles.size(); i++){
 		newParticles.at(i).getPose();
-	}*/
+		cout<<" weight: "<< newParticles.at(i).weight <<"\n";
+	}
 	return 0;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------
