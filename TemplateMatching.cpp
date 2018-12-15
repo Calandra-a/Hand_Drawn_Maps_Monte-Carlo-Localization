@@ -66,9 +66,7 @@ map match( Mat img, Mat templ)
     //printf("TOP: X: %d Y: %d\n", matchLoc.x, matchLoc.y);
     //printf("BOTTOM: X: %d Y: %d\n", bottom.x, bottom.y);
   }
-  Map.printMap();
   Map = mapNorm(Map);
-  printf("\n-----------------------------\n");
   Map.printMap();
   
   //imshow( image_window, img );
