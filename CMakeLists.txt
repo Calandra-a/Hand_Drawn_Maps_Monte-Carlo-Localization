@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 2.8)
+project( tempMatch )
+find_package( OpenCV REQUIRED )
+
+add_executable( mapMatch TemplateMatching.cpp )
+target_link_libraries( mapMatch ${OpenCV_LIBS} )
+
+add_executable( mcl mcl.cpp )
+target_link_libraries( mcl ${OpenCV_LIBS} )
