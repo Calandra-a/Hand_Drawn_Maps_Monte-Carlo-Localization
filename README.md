@@ -82,5 +82,8 @@ world3C1.launch
 world3C2.launch
 world3C3.launch
 
+
+Robot model was sourced from https://github.com/richardw05/mybot_ws.git and the accompanying guide (http://moorerobots.com/blog/post/2) not oringal work except for plugin modifications to fit my applications
+
 differential drive robot model was sourced from https://github.com/richardw05/mybot_ws.git and the accomanying tutorial guide and was not my orginal design - Source: http://moorerobots.com/blog/post/2
 
