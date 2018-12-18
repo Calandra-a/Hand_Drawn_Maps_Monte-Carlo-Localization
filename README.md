@@ -42,5 +42,5 @@ These files are provided in the repo, however feel free to create your own.
 
 Notes: currently the camera sensor isnt subscribed to, I hardcoded the objects it would see into the map to create a testable environment quickly
 
-
+Also, topic_publisher.cpp is the "main" entry point file currently (not main.cpp, which is actully unused)
 In the effort to maintain academic honesty the robot model was sourced from https://github.com/richardw05/mybot_ws.git and the accompanying guide (http://moorerobots.com/blog/post/2) it's not oringal work except for plugin modifications to fit my applications
