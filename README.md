@@ -4,7 +4,7 @@ There are 3 seperate functionalities, that I was unable to fully integrate.
 ---
 Challenges:
 ---
-Integrating Gazebo/ROS into the project as I started by devloping my HMI is pure OpenCV 3.2 and MCL as a standalone C++ class.
+Integrating Gazebo/ROS into the project as I started by devloping my HMI is pure OpenCV 3.2 and Monte Carlo Localization(MCL) as a standalone C++ class.
 
 Once those were at a stable state I began Integrating Gazebo/ROS which didnt work well with my pre-existing codebase and required a good amount of refactoring which paired with
 
