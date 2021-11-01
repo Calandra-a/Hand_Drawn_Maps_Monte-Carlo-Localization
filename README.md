@@ -1,6 +1,4 @@
-This Branch hold all the updated information and code for the project
----
-The project is now fully integrated, with a functional HMI, MCL, and Gazebo simulation
+This Repository is the results of an Undergraduate independent study research project, resulting in a system that will take in hand drawn maps to generate initial map data for a Monte Carlo Localization algorithm
 
 Compiling:
 ---
@@ -17,7 +15,6 @@ with the command
 
 roslaunch mybot_gazebo world1C1.launch 
 ---
->>>>>>> Created Readme
 for the other world run the launch files instead.
 world1C1.launch
 world1C2.launch
