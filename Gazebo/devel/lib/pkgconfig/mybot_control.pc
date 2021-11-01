@@ -1,8 +1,0 @@
-prefix=/home/arc/ResearchProject/Gazebo/devel
-
-Name: mybot_control
-Description: Description of mybot_control
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/arc/ResearchProject/Gazebo/devel/lib 
-Requires: 

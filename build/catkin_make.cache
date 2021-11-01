@@ -1,0 +1,2 @@
+mybot_control:mybot_description:mybot_gazebo:sub
+-DCATKIN_DEVEL_PREFIX=/home/arc/ros/devel -DCMAKE_INSTALL_PREFIX=/home/arc/ros/install -G Unix Makefiles
